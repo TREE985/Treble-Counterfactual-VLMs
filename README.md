@@ -21,8 +21,9 @@ Before running the project, please download the required dependencies:
 - Download the COCO **train2014** and **val2014** datasets, and place them in the following directories:
 
 ```
-experiments/data/train2014/
-experiments/data/val2014/
+experiments/data/
+├── train2014/
+└── val2014/
 ```
 - `experiments/test/` contains the test files for LLaVA and InstructBlip.
 - `experiments/eval/` contains the GPT evaluation code for assessing the MMHal-Bench performance.
