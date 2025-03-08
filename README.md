@@ -1,12 +1,12 @@
 # Treble-Counterfactual-VLMs
 The repository follows the directory structure below:
 Treble-Counterfactual-VLMs/
-├── experiments/
-├── lavis/
-├── llava/
-├── TTI_utils/
-├── POPE/
-└── README.md
+-├── experiments/
+-├── lavis/
+-├── llava/
+-├── TTI_utils/
+-├── POPE/
+-└── README.md
 
 ## Setup Instructions
 
