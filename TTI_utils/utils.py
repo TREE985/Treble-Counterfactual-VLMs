@@ -307,25 +307,22 @@ def visual_shift(model, image_tensor, rank=1, model_is_llaval=True):
     return direction, reading_direction
 
 def text_shift(model, inputs, image_tensor, rank=1):
-    hidden_states = get_hiddenstates(model, inputs, image_tensor) # 获取模型处理文本输入和图像后的隐藏状态
+    hidden_states = get_hiddenstates(model, inputs, image_tensor)
     hidden_states_all = []
-    num_demonstration = len(hidden_states) # 获取隐藏状态的总数
-    neg_all = [] # 负向隐藏状态列表
-    pos_all = [] # 正向隐藏状态列表
+    num_demonstration = len(hidden_states)
+    neg_all = []
+    pos_all = []
     for demonstration_id in range(num_demonstration):
-        # h为负向和正向隐藏状态的差异值
-        h = hidden_states[demonstration_id][1].view(-1) - hidden_states[demonstration_id][0].view(-1)
-        hidden_states_all.append(h) # 存储差异
-        neg_all.append(hidden_states[demonstration_id][0].view(-1)) # 存储负向隐藏状态
-        pos_all.append(hidden_states[demonstration_id][1].view(-1)) # 存储正向隐藏状态
-    fit_data = torch.stack(hidden_states_all) # 将所有隐藏状态差异叠成一个张量
-    pca = PCA(n_components=rank).to(fit_data.device).fit(fit_data.float()) # 将隐藏状态差异降维到1维
-    eval_data =  pca.transform(fit_data.float()) # 对数据进行PCA变换，得到降维后的数据
-    h_pca = pca.inverse_transform(eval_data) # 降维数据变回原先维度
 
-    # 计算方向：主成分的和加均值再取平均，表示一个方向
+        h = hidden_states[demonstration_id][1].view(-1) - hidden_states[demonstration_id][0].view(-1)
+        hidden_states_all.append(h)
+        neg_all.append(hidden_states[demonstration_id][0].view(-1))
+        pos_all.append(hidden_states[demonstration_id][1].view(-1))
+    fit_data = torch.stack(hidden_states_all)
+    pca = PCA(n_components=rank).to(fit_data.device).fit(fit_data.float()) 
+    eval_data =  pca.transform(fit_data.float()) 
+    h_pca = pca.inverse_transform(eval_data) 
     direction = (pca.components_.sum(dim=1,keepdim=True) + pca.mean_).mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))#h_pca.mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))
-    # 计算阅读方向：所有隐藏状态差异的均值，表示“阅读”过程中的方向
     reading_direction = fit_data.mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))
     return direction, reading_direction
 
