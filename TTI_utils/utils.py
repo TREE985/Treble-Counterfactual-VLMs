@@ -322,7 +322,7 @@ def text_shift(model, inputs, image_tensor, rank=1):
     pca = PCA(n_components=rank).to(fit_data.device).fit(fit_data.float()) 
     eval_data =  pca.transform(fit_data.float()) 
     h_pca = pca.inverse_transform(eval_data) 
-    direction = (pca.components_.sum(dim=1,keepdim=True) + pca.mean_).mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))#h_pca.mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))
+    direction = (pca.components_.sum(dim=1,keepdim=True) + pca.mean_).mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))
     reading_direction = fit_data.mean(0).view(hidden_states[demonstration_id][0].size(0), hidden_states[demonstration_id][0].size(1))
     return direction, reading_direction
 
