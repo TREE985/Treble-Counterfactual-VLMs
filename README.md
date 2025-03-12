@@ -6,7 +6,6 @@ Treble-Counterfactual-VLMs/
 ├── experiments/
 ├── lavis/
 ├── llava/
-├── TTI_utils/
 ├── POPE/
 └── README.md
 ```
@@ -27,3 +26,4 @@ experiments/data/
 ```
 - `experiments/test/` contains the test files for LLaVA and InstructBlip.
 - `experiments/eval/` contains the GPT evaluation code for assessing the MMHal-Bench performance.
+- `experiments/Treble_Counterfactual_utils/` contains the utils for implementing treble counterfactual test-time intervention
