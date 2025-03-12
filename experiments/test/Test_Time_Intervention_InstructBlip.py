@@ -11,8 +11,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from Code.lavis.models import load_model_and_preprocess
 from PIL import Image
 from transformers import set_seed
-from Code.TTI_utils.utils import text_shift_IB, visual_shift_IB, cross_modal_shift_IB, Gaussion_Noise_sample_IB, Blank_sample_IB
-from Code.TTI_utils.Test_Time_Intervention_utils import test_time_intervention, remove_vti_layers
+from Treble_Counterfactual_utils.representation_shift import text_shift_IB, visual_shift_IB, cross_modal_shift_IB, Gaussion_Noise_sample_IB, Blank_sample_IB
+from Treble_Counterfactual_utils.Test_Time_Intervention import test_time_intervention, remove_vti_layers
 from datasets import load_dataset
 
 def load_image(image_file):
@@ -30,10 +30,7 @@ def get_tuple_shape(tup):
         tup = tup[0]
     return shape
 
-
 def eval_model(args):
-    # Model
-    # disable_torch_init()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model, image_processor, _ = load_model_and_preprocess(name="blip2_vicuna_instruct", model_type="vicuna7b", is_eval=True, device=device)
     from transformers import InstructBlipProcessor, InstructBlipForConditionalGeneration

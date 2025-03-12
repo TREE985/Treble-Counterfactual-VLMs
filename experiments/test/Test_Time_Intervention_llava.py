@@ -15,8 +15,8 @@ from llava.utils import disable_torch_init
 from llava.mm_utils import BytesIO, tokenizer_image_token, get_model_name_from_path, KeywordsStoppingCriteria
 from PIL import Image
 from transformers import set_seed
-from Code.TTI_utils.utils import text_shift, visual_shift, cross_modal_shift, Gaussion_Noise_sample, Blank_sample
-from Code.TTI_utils.Test_Time_Intervention_utils import test_time_intervention
+from Treble_Counterfactual_utils.representation_shift import text_shift, visual_shift, cross_modal_shift, Gaussion_Noise_sample, Blank_sample
+from Treble_Counterfactual_utils.Test_Time_Intervention import test_time_intervention
 from datasets import load_dataset
 
 def get_tuple_shape(tup):
